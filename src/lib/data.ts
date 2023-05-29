@@ -1,4 +1,4 @@
-const ApiURL = "https://rt.data.gov.hk/v1/transport/mtr/lrt/getSchedule?station_id={stn}";
+const ApiURL = "https://MTRData.kennymhhui.repl.co/lr?stnId={stn}";
 const FallbackApiURL = "https://rt.data.gov.hk/v1/transport/mtr/lrt/getSchedule?station_id={stn}";
 
 export class ArrivalEntry {
