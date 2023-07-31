@@ -41,7 +41,7 @@
 
 <footer>
     <p><a href="https://hktss.github.io/mtr-pids/" target="_blank" rel="noopener noreferrer">願景資訊顯示屏模擬器<br>Railway Vision PIDS Simulator</a></p>
-    <a href="https://hktss.github.io/" target="_blank" rel="noopener noreferrer"><img class="logo" src="/img/tss_logo.png" alt="HKTSS Logo" height=40></a>
+    <a href="https://hktss.github.io/" target="_blank" rel="noopener noreferrer"><img class="logo" src="img/tss_logo.png" alt="HKTSS Logo" height=40></a>
 </footer>
 
 <style>
