@@ -40,8 +40,8 @@
 </main>
 
 <footer>
-    <p>HKTSS 2023</p>
-    <p><a href="https://hktss.github.io/mtr-pids/">願景資訊顯示屏模擬器</a></p>
+    <p><a href="https://hktss.github.io/mtr-pids/" target="_blank" rel="noopener noreferrer">願景資訊顯示屏模擬器<br>Railway Vision PIDS Simulator</a></p>
+    <a href="https://hktss.github.io/" target="_blank" rel="noopener noreferrer"><img class="logo" src="/img/tss_logo.png" alt="HKTSS Logo" height=40></a>
 </footer>
 
 <style>
@@ -61,12 +61,13 @@
         display: flex;
         width: 100%;
         justify-content: space-between;
+        align-items: end;
         position: absolute;
         bottom: 0;
     }
 
-    footer * {
-        margin: 5px;
+    footer > * {
+        margin: 20px;
     }
 
     button, select {
@@ -119,5 +120,11 @@
         width: 80%;
         font-size: 18px;
         background-color: #77CCFF;
+    }
+
+    @media screen and ( max-height: 699px ) {
+        main, footer {
+            font-size: 0.75em;
+        }
     }
 </style>
