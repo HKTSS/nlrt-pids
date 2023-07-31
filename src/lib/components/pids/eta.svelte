@@ -7,7 +7,7 @@
   let etaData: ArrivalEntry[] = [];
   const DisplayedArrivalRow = 10;
 
-  async function fetchData(stnId: string, targetPlatform: number, fallback: boolean = false) {
+  async function fetchData(stnId: string, targetPlatform: number, fallback = false) {
     if(stnId == null || targetPlatform == null) return;
     let resp;
     try {
@@ -62,38 +62,37 @@
 </script>
 
 <main>
-  <table id="eta">
-      <tr class="header">
-          <td><span class="sizeZH">路線</span><br>Route</td>
-          <td><span class="sizeZH">目的地</span><br>Destination</td>
-          <td></td>
-          <td><span class="sizeZH">下班車</span><br>Next Train</td>
-      </tr>
+    <div class="row header">
+        <div><span class="sizeZH">路線</span><br>Route</div>
+        <div><span class="sizeZH">目的地</span><br>Destination</div>
+        <div></div>
+        <div><span class="sizeZH">下班車</span><br>Next Train</div>
+    </div>
 
       {#each {length: DisplayedArrivalRow} as _, i}
         {#if i < etaData.length}
-          <tr class="arrRow">
-            <td class="lineHeightDouble sizeDouble">{etaData[i].route_no}</td>
-            <td><span class="sizeZH">{etaData[i].dest_zh}</span><br>{etaData[i].dest_en}</td>
-            <td>
-              <div class="cars">
-                {#each {length: etaData[i].train_length} as _, i}
-                <img class="car" src="img/lrv.png" alt="LRV Car {i}">
-                {/each}
-              </div>
-            </td>
-            <td><span class="sizeDouble multiLine">{etaData[i].time_num}</span><span class="eta">{etaData[i].time_text.split("|")[0]}<br>{etaData[i].time_text.split("|")[1]}</span></td>
-          </tr>
+          <div class="row arrRow">
+            <div class="sizeDouble">{etaData[i].route_no}</div>
+            <div><span class="sizeZH">{etaData[i].dest_zh}</span><br>{etaData[i].dest_en}</div>
+            <div class="cars">
+              {#each {length: etaData[i].train_length} as _, i}
+              <img class="car" src="img/lrv.png" alt="LRV Car {i}">
+              {/each}
+            </div>
+            <div>
+              <span class="sizeDouble multiLine">{etaData[i].time_num}</span>
+              <div class="eta">{etaData[i].time_text.split("|")[0]}<br>{etaData[i].time_text.split("|")[1]}</div>
+            </div>
+          </div>
         {:else}
-          <tr class="arrRow">
-            <td class="lineHeightDouble sizeDouble">&nbsp;</td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
+          <div class="arrRow">
+            <div class="sizeDouble">&nbsp;</div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
         {/if}
       {/each}
-  </table>
 </main>
 
 <style>
@@ -109,86 +108,72 @@
       overflow-y: hidden;
   }
 
-  table {
-      border-spacing: 15px;
-      width: 100%;
-  }
-
-  tr td {
-      vertical-align: middle;
-      padding: 5px;
-  }
-
-  #eta {
+  main {
       font-size: 2.2vh;
       font-family: var(--font-family);
       font-weight: 600;
   }
 
-  #eta > tr:nth-child(2n+1) {
+  .arrRow:nth-child(2n+1) {
       background-color: #FFF8F2;
       border: 1px solid lightgray;
-  }
-
-  #eta > tr > td {
-      padding: 0 10px;
   }
 
   .header {
       font-family: var(--font-family);
       font-size: 1.5vh;
-      padding: 5px;
-  }
-
-  .header td {
       background-color: lightgray;
   }
 
+  .row {
+    display: flex;
+    align-items: center;
+    max-width: 100%;
+    padding: 0 2%;
+  }
+
   .arrRow {
-      vertical-align: middle;
-      padding: 10px;
+      height: 8.8333vh;
   }
 
-  #eta {
-      table-layout: fixed;
+  .row > div:nth-child(1) {
+    width: 20%;
   }
 
-  #eta > tr > td:nth-child(1) {
-      width: 16%;
+  .row > div:nth-child(2) {
+    white-space: nowrap;
+    width: 40%;
   }
 
-  #eta > tr > td:nth-child(2) {
-      max-width: 30%;
-  }
-
-  #eta > tr > td:nth-child(3) {
-      text-align: right;
-      white-space: nowrap;
-      width: 11vh;
-      position: relative;
+  .row > div:nth-child(3) {
+    width: 20%;
   }
 
   .cars {
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
+    display: flex;
+    justify-content: flex-end;
+    text-align: right;
+  }
+
+  .row > div:last-child {
+    text-align: right;
+    margin-left: auto;
+  }
+
+  .arrRow > div:last-child {
+    display: flex;
+    align-items: center;
+    min-width: max-content;
   }
 
   .car {
+    float: right;
     width: 6vh;
-  }
-
-  #eta > tr > td:last-child {
-      width: 11vh;
-      text-align: right;
   }
 
   .multiLine {
     margin: 5px;
-    line-height: 0em;
-    vertical-align: bottom;
-    width: 6vh;
+    vertical-align: middle;
   }
 
   .sizeZH {
@@ -197,9 +182,5 @@
 
   .sizeDouble {
       font-size: 2em;
-  }
-
-  .lineHeightDouble {
-      line-height: 2em;
   }
 </style>
