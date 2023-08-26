@@ -5,11 +5,13 @@
     import Config from './lib/components/config.svelte'
     let stnId: string;
     let platform: number;
+    let useHorizontal: boolean;
     let showConfig: boolean = false;
 
     function getSavedData() {
         let savedPlat = localStorage.getItem("platform")
         let savedStn = localStorage.getItem("stnId");
+        let savedHorizontal = localStorage.getItem("horizontal");
         if(savedPlat == null || savedStn == null) {
             stnId = "1";
             platform = 2;
@@ -18,14 +20,19 @@
             stnId = savedStn;
             platform = parseInt(savedPlat);
         }
+
+        if(savedHorizontal == "true") {
+            useHorizontal = true;
+        }
     }
 
-    function saveData(stationId: string, platformNum: number) {
+    function saveData(stationId: string, platformNum: number, horizontal: boolean) {
         if(stationId !== undefined) localStorage.setItem("stnId", stationId);
         if(platformNum !== undefined) localStorage.setItem("platform", platformNum.toString())
+        localStorage.setItem("horizontal", String(horizontal))
     }
 
-    $: saveData(stnId, platform);
+    $: saveData(stnId, platform, useHorizontal);
 
     function parseQuery() {
         const urlSearchParams = new URLSearchParams(window.location.search);
@@ -34,6 +41,9 @@
             showConfig = false;
             stnId = params["stnId"];
             platform = parseInt(params["plat"]);
+        }
+        if(params["horz"] != null) {
+            useHorizontal = params["horz"] == "true";
         }
     }
 
@@ -45,13 +55,13 @@
 
 <main>
     
-    <div class="portrait">
+    <div class="{useHorizontal ? "horizontal" : "portrait"}">
         <Pids {stnId} {platform} on:showConfig={() => showConfig = true}/>
     </div>
 
     {#if showConfig}
-        <div transition:fade="{{ duration: 100 }}" class="portrait">
-            <Config bind:stationId={stnId} bind:selectedPlatform={platform} on:click={() => showConfig = false}/>
+        <div transition:fade="{{ duration: 100 }}" class="{useHorizontal ? "horizontal" : "portrait"}">
+            <Config bind:stationId={stnId} bind:selectedPlatform={platform} bind:useHorizontal on:click={() => showConfig = false}/>
         </div>
     {/if}
 </main>
@@ -72,5 +82,14 @@
         right: 0;
         margin: 0 auto;
         aspect-ratio: 10 / 16;
+    }
+
+    .horizontal {
+        position: absolute;
+        height: 100%;
+        overflow-y: hidden;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
     }
 </style>

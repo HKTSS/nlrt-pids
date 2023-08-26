@@ -2,6 +2,7 @@
     import { StationCodeList } from '../data';
     export let stationId: string;
     export let selectedPlatform: number;
+    export let useHorizontal: boolean;
 </script>
 
 <main>
@@ -31,6 +32,14 @@
                         <option value={plat}>{plat}</option>
                     {/each}
                 </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="sizeZH">全螢幕</span><br><span class="sizeEN">Full Screen</span>
+            </td>
+            <td>
+                <input type="checkbox" bind:checked={useHorizontal} on:click={() => useHorizontal = !useHorizontal}>
             </td>
         </tr>
     </table>
