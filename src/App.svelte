@@ -5,7 +5,7 @@
     import Config from './lib/components/config.svelte'
     let stnId: string;
     let platform: number;
-    let useHorizontal: boolean;
+    let useHorizontal: boolean = false;
     let showConfig: boolean = false;
 
     function getSavedData() {
@@ -32,8 +32,6 @@
         localStorage.setItem("horizontal", String(horizontal))
     }
 
-    $: saveData(stnId, platform, useHorizontal);
-
     function parseQuery() {
         const urlSearchParams = new URLSearchParams(window.location.search);
         const params = Object.fromEntries(urlSearchParams.entries());
@@ -50,6 +48,7 @@
     onMount(() => {
         getSavedData();
         parseQuery();
+        saveData(stnId, platform, useHorizontal);
     });
 </script>
 
@@ -61,7 +60,10 @@
 
     {#if showConfig}
         <div transition:fade="{{ duration: 100 }}" class="{useHorizontal ? "horizontal" : "portrait"}">
-            <Config bind:stationId={stnId} bind:selectedPlatform={platform} bind:useHorizontal on:click={() => showConfig = false}/>
+            <Config bind:stationId={stnId} bind:selectedPlatform={platform} bind:useHorizontal on:click={() => {
+                showConfig = false;
+                saveData(stnId, platform, useHorizontal);
+            }}/>
         </div>
     {/if}
 </main>
