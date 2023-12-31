@@ -4,6 +4,7 @@
 
   export let stnId : string;
   export let targetPlatform : number;
+  export let timeMode: string;
   let etaData: ArrivalEntry[] = [];
   const DisplayedArrivalRow = 10;
 
@@ -44,8 +45,11 @@
             timenum = "";
             timetext = `${rawEntry.time_ch}|${rawEntry.time_en}`;
           }
+          
+          let timeMsOffset = (parseInt(timenum) || 0) * 1000 * 60;
+          let etaDate = new Date(new Date().getTime() + (timeMsOffset));
 
-          let entry = new ArrivalEntry(rawEntry.route_no, rawEntry.train_length, rawEntry.dest_ch, rawEntry.dest_en, timenum, timetext);
+          let entry = new ArrivalEntry(rawEntry.route_no, rawEntry.train_length, rawEntry.dest_ch, rawEntry.dest_en, timenum, timetext, etaDate);
           entries.push(entry);
       }
     }
@@ -80,8 +84,12 @@
               {/each}
             </div>
             <div>
-              <span class="sizeDouble multiLine">{etaData[i].time_num}</span>
-              <div class="eta">{etaData[i].time_text.split("|")[0]}<br>{etaData[i].time_text.split("|")[1]}</div>
+              {#if timeMode == "relative"}
+                <span class="sizeDouble multiLine">{etaData[i].time_num}</span>
+                <div class="eta">{etaData[i].time_text.split("|")[0]}<br>{etaData[i].time_text.split("|")[1]}</div>
+              {:else}
+              <span class="sizeDouble multiLine">{String(etaData[i].eta_date.getHours()).padStart(2, "0")}:{String(etaData[i].eta_date.getMinutes()).padStart(2, "0")}</span>
+              {/if}
             </div>
           </div>
         {:else}

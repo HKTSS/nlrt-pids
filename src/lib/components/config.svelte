@@ -3,6 +3,7 @@
     export let stationId: string;
     export let selectedPlatform: number;
     export let useHorizontal: boolean;
+    export let timeMode: string;
 </script>
 
 <main>
@@ -40,6 +41,17 @@
             </td>
             <td>
                 <input type="checkbox" bind:checked={useHorizontal} on:click={() => useHorizontal = !useHorizontal}>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="sizeZH">時間顯示</span><br><span class="sizeEN">Time Display</span>
+            </td>
+            <td>
+                <select bind:value={timeMode}>
+                    <option value="relative">預計到達時間 ETA</option>
+                    <option value="absolute">時間 Time</option>
+                </select>
             </td>
         </tr>
     </table>

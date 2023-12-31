@@ -36,9 +36,11 @@
                 <span class="platcircle">{platform}</span>
                 <div class="plattext">月台<br>Platform</div>
             </td>
-            <td class="stnName" role="button" tabindex="0" title="Show Config Menu" on:click={showConfigMenu} on:keypress={showConfigMenu}>
-                <span class="sizeZH">{stnZH || "站名"}</span><br>
-                <span class="en">{stnEN || "Station Name"}</span>
+            <td class="stnName" title="Show Config Menu">
+                <button class="non-styled-btn" on:click={showConfigMenu} on:keypress={showConfigMenu}>
+                    <span class="sizeZH">{stnZH || "站名"}</span><br>
+                    <span class="en">{stnEN || "Station Name"}</span>
+                </button>
             </td>
             <td class="clock">
                 {hour}:{minutes}
@@ -92,7 +94,6 @@
     }
 
     .stnName {
-        cursor: pointer;
         text-align: center;
     }
 
@@ -104,5 +105,10 @@
     .plattext {
         white-space: nowrap;
         vertical-align: middle;
+    }
+
+    .non-styled-btn {
+        all: unset;
+        cursor: pointer;
     }
 </style>

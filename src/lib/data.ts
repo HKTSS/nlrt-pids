@@ -7,15 +7,17 @@ export class ArrivalEntry {
     dest_zh: string;
     dest_en: string;
     time_num: string;
-    time_text : string;
+    time_text: string;
+    eta_date: Date
     
-    constructor(route_no: string, train_length: number, dest_zh: string, dest_en: string, time_num: string, time_text: string) {
+    constructor(route_no: string, train_length: number, dest_zh: string, dest_en: string, time_num: string, time_text: string, eta_date: Date) {
         this.route_no = route_no;
         this.train_length = train_length;
         this.dest_zh = dest_zh;
         this.dest_en = dest_en;
         this.time_text = time_text;
         this.time_num = time_num;
+        this.eta_date = eta_date;
     }
 }
 

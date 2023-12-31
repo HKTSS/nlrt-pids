@@ -5,31 +5,24 @@
     import Config from './lib/components/config.svelte'
     let stnId: string;
     let platform: number;
-    let useHorizontal: boolean = false;
-    let showConfig: boolean = false;
+    let useHorizontal = false;
+    let showConfig = false;
+    let timeMode = "relative";
 
     function getSavedData() {
-        let savedPlat = localStorage.getItem("platform")
-        let savedStn = localStorage.getItem("stnId");
-        let savedHorizontal = localStorage.getItem("horizontal");
-        if(savedPlat == null || savedStn == null) {
-            stnId = "1";
-            platform = 2;
-            showConfig = true;
-        } else {
-            stnId = savedStn;
-            platform = parseInt(savedPlat);
-        }
-
-        if(savedHorizontal == "true") {
-            useHorizontal = true;
-        }
+        showConfig = localStorage.getItem("visited") == null;
+        platform = parseInt(localStorage.getItem("platform")) || 2;
+        stnId = localStorage.getItem("stnId") ?? "1";
+        useHorizontal = localStorage.getItem("horizontal") === "true";
+        timeMode = localStorage.getItem("timeMode") ?? "relative";
     }
 
-    function saveData(stationId: string, platformNum: number, horizontal: boolean) {
-        if(stationId !== undefined) localStorage.setItem("stnId", stationId);
-        if(platformNum !== undefined) localStorage.setItem("platform", platformNum.toString())
+    function saveData(stationId: string, platformNum: number, horizontal: boolean, timeMode: string) {
+        localStorage.setItem("visited", String(true));
+        localStorage.setItem("stnId", stationId);
+        localStorage.setItem("platform", platformNum.toString())
         localStorage.setItem("horizontal", String(horizontal))
+        localStorage.setItem("timeMode", timeMode);
     }
 
     function parseQuery() {
@@ -40,29 +33,29 @@
             stnId = params["stnId"];
             platform = parseInt(params["plat"]);
         }
+
         if(params["horz"] != null) {
-            useHorizontal = params["horz"] == "true";
+            useHorizontal = params["horz"] === "true";
         }
     }
 
     onMount(() => {
         getSavedData();
         parseQuery();
-        saveData(stnId, platform, useHorizontal);
+        saveData(stnId, platform, useHorizontal, timeMode);
     });
 </script>
 
 <main>
-    
     <div class="{useHorizontal ? "horizontal" : "portrait"}">
-        <Pids {stnId} {platform} on:showConfig={() => showConfig = true}/>
+        <Pids {stnId} {platform} {timeMode} on:showConfig={() => showConfig = true}/>
     </div>
 
     {#if showConfig}
         <div transition:fade="{{ duration: 100 }}" class="{useHorizontal ? "horizontal" : "portrait"}">
-            <Config bind:stationId={stnId} bind:selectedPlatform={platform} bind:useHorizontal on:click={() => {
+            <Config bind:stationId={stnId} bind:selectedPlatform={platform} bind:useHorizontal bind:timeMode on:click={() => {
                 showConfig = false;
-                saveData(stnId, platform, useHorizontal);
+                saveData(stnId, platform, useHorizontal, timeMode);
             }}/>
         </div>
     {/if}
