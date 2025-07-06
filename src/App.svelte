@@ -1,8 +1,9 @@
 <script lang="ts">
     import { fade } from 'svelte/transition';
     import { onMount } from 'svelte';
-    import Pids from './lib/components/pids.svelte'
-    import Config from './lib/components/config.svelte'
+    import Pids from './lib/components/pids.svelte';
+    import Config from './lib/components/config.svelte';
+    let pidsElement: HTMLElement;
     let stnId: string;
     let platform: number;
     let useHorizontal = false;
@@ -11,7 +12,7 @@
 
     function getSavedData() {
         showConfig = localStorage.getItem("visited") == null;
-        platform = parseInt(localStorage.getItem("platform")) || 2;
+        platform = parseInt(localStorage.getItem("platform") ?? "2");
         stnId = localStorage.getItem("stnId") ?? "1";
         useHorizontal = localStorage.getItem("horizontal") === "true";
         timeMode = localStorage.getItem("timeMode") ?? "relative";
@@ -47,7 +48,7 @@
 </script>
 
 <main>
-    <div class="{useHorizontal ? "horizontal" : "portrait"}">
+    <div bind:this={pidsElement} class="{useHorizontal ? "horizontal" : "portrait"}">
         <Pids {stnId} {platform} {timeMode} on:showConfig={() => showConfig = true}/>
     </div>
 
@@ -62,13 +63,6 @@
 </main>
 
 <style>
-    main {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        background-color: #000;
-    }
-
     .portrait {
         position: absolute;
         height: 100%;
@@ -82,7 +76,6 @@
     .horizontal {
         position: absolute;
         height: 100%;
-        overflow-y: hidden;
         left: 0;
         right: 0;
         margin: 0 auto;

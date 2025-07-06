@@ -31,21 +31,23 @@
 </script>
 <div id="titlebar">
     <table id="titlebarTB">
-        <tr>
-            <td class="platformCell">
-                <span class="platcircle">{platform}</span>
-                <div class="plattext">月台<br>Platform</div>
-            </td>
-            <td class="stnName" title="Show Config Menu">
-                <button class="non-styled-btn" on:click={showConfigMenu} on:keypress={showConfigMenu}>
-                    <span class="sizeZH">{stnZH || "站名"}</span><br>
-                    <span class="en">{stnEN || "Station Name"}</span>
-                </button>
-            </td>
-            <td class="clock">
-                {hour}:{minutes}
-            </td>
-        </tr>
+        <tbody>
+            <tr>
+                <td class="platformCell">
+                    <span class="platcircle">{platform}</span>
+                    <div class="plattext">月台<br>Platform</div>
+                </td>
+                <td class="stnName" title="Show Config Menu">
+                    <button class="non-styled-btn" on:click={showConfigMenu} on:keypress={showConfigMenu}>
+                        <span class="sizeZH">{stnZH || "站名"}</span><br>
+                        <span class="en">{stnEN || "Station Name"}</span>
+                    </button>
+                </td>
+                <td class="clock">
+                    {hour}:{minutes}
+                </td>
+            </tr>
+        </tbody>
     </table>
 </div>
   

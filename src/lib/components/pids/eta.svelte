@@ -8,16 +8,14 @@
   let etaData: ArrivalEntry[] = [];
   const DisplayedArrivalRow = 10;
 
-  async function fetchData(stnId: string, targetPlatform: number, fallback = false) {
+  async function fetchData(stnId: string, targetPlatform: number) {
     if(stnId == null || targetPlatform == null) return;
     let resp;
     try {
-      resp = await fetch(getApiURL(stnId, fallback));
+      resp = await fetch(getApiURL(stnId));
     } catch {
-      if(!fallback) {
-        console.warn("Cannot fetch data from proxy server, falling back to MTR")
-        return fetchData(stnId, targetPlatform, true);
-      }
+        console.error("Failed to fetch ETA data!");
+        return null;
     }
 
     let data = await resp.json();
@@ -58,11 +56,10 @@
 
   $: fetchData(stnId, targetPlatform);
 
-  onMount(async () => {
+  onMount(() => {
     const fetchInterval = setInterval(async() => await fetchData(stnId, targetPlatform), 10000);
-
     return () => clearInterval(fetchInterval);
-  })
+  });
 </script>
 
 <main>
