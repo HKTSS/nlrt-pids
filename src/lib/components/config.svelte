@@ -61,7 +61,7 @@
     <p>如需要再顯示此菜單，請按頂部的車站名</p>
     <p>Click the station name at the top to return to this menu.</p>
     <footer>
-        <p><a href="https://hktss.github.io/mtr-pids/" target="_blank" rel="noopener noreferrer">願景資訊顯示屏模擬器<br>Railway Vision PIDS Simulator</a></p>
+        <p><a href="https://hktss.github.io/sims.html" target="_blank" rel="noopener noreferrer">查看其他模擬器系列<br>Explore other simulators</a></p>
         <a href="https://hktss.github.io/" target="_blank" rel="noopener noreferrer"><img class="logo" src="img/tss_logo.png" alt="HKTSS Logo" height=40></a>
     </footer>
 </main>
