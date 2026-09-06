@@ -46,8 +46,9 @@
           
           let timeMsOffset = (parseInt(timenum) || 0) * 1000 * 60;
           let etaDate = new Date(new Date().getTime() + (timeMsOffset));
+          let routeNo = rawEntry.special == 1 ? rawEntry.additionalInfo1 : rawEntry.route_no;
 
-          let entry = new ArrivalEntry(rawEntry.route_no, rawEntry.train_length, rawEntry.dest_ch, rawEntry.dest_en, timenum, timetext, etaDate);
+          let entry = new ArrivalEntry(routeNo, rawEntry.train_length, rawEntry.dest_ch, rawEntry.dest_en, timenum, timetext, etaDate);
           entries.push(entry);
       }
     }
